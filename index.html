@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Attendance Calculator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 60px auto;
+      background-color: #fff;
+      padding: 30px 20px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 6px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .result.pass {
+      background-color: #e7f7e7;
+      border: 1px solid #4CAF50;
+      color: #2e7d32;
+    }
+
+    .result.fail {
+      background-color: #fff3f3;
+      border: 1px solid #e53935;
+      color: #c62828;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        margin: 30px 10px;
+        padding: 25px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Attendance Calculator</h2>
+
+    <label for="held">Total Classes Held:</label>
+    <input type="number" id="held" placeholder="e.g., 40" />
+
+    <label for="attended">Classes Attended:</label>
+    <input type="number" id="attended" placeholder="e.g., 30" />
+
+    <button onclick="calculateAttendance()">Check Attendance</button>
+
+    <div id="result" class="result" style="display:none;"></div>
+  </div>
+
+  <script>
+    function calculateAttendance() {
+      const held = parseInt(document.getElementById('held').value);
+      const attended = parseInt(document.getElementById('attended').value);
+      const resultDiv = document.getElementById('result');
+
+      if (isNaN(held) || isNaN(attended) || held <= 0 || attended < 0) {
+        resultDiv.style.display = 'none';
+        alert("⚠️ Please enter valid numbers for both fields.");
+        return;
+      }
+
+      const percentage = (attended / held) * 100;
+      let message = `Your attendance is <strong>${percentage.toFixed(2)}%</strong>.`;
+      
+      if (percentage >= 75) {
+        message += " ✅<br>You are <strong>allowed</strong> to sit in the exam.";
+        resultDiv.className = "result pass";
+      } else {
+        const needed = Math.ceil((0.75 * held - attended) / 0.25);
+        message += ` ❌<br>You need to attend <strong>${needed}</strong> more classes to reach 75%.`;
+        resultDiv.className = "result fail";
+      }
+
+      resultDiv.innerHTML = message;
+      resultDiv.style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
