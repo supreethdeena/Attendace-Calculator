@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Attendance Dashboard</title>
+  <title>Attendance Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -11,124 +12,137 @@
 
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f8f9fa;
-      color: #333;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f1f3f4;
+      color: #202124;
     }
 
     header {
-      background-color: #2d3e50;
+      background-color: #1a73e8;
       padding: 20px;
       color: white;
       text-align: center;
-      font-size: 24px;
-      font-weight: 600;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
     }
 
     .dashboard {
       max-width: 600px;
-      margin: 40px auto;
-      background-color: #ffffff;
+      margin: 50px auto;
+      background-color: white;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      padding: 30px 25px;
+      box-shadow: 0 2px 10px rgba(60, 64, 67, 0.1);
+      padding: 32px 24px;
     }
 
     h2 {
-      margin-bottom: 25px;
+      margin-bottom: 30px;
       text-align: center;
-      font-size: 22px;
-      color: #2d3e50;
+      font-size: 20px;
+      color: #1f1f1f;
+      font-weight: 500;
     }
 
     label {
       display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #5f6368;
     }
 
     input[type="number"] {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      border: 1px solid #dadce0;
+      border-radius: 8px;
       font-size: 16px;
+      transition: border 0.3s ease;
+    }
+
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #1a73e8;
+      box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
     }
 
     button {
       width: 100%;
       padding: 12px;
-      background-color: #007bff;
+      background-color: #1a73e8;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       color: white;
       font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.2s ease;
     }
 
     button:hover {
-      background-color: #0069d9;
+      background-color: #1765cc;
     }
 
     .stats {
       display: flex;
       justify-content: space-between;
-      margin-top: 25px;
-      gap: 10px;
+      margin-top: 30px;
+      gap: 12px;
     }
 
     .card {
       flex: 1;
-      background-color: #f1f3f5;
-      padding: 15px 20px;
+      background-color: #f8f9fa;
+      padding: 14px 18px;
       border-radius: 8px;
       text-align: center;
-      font-size: 16px;
-      font-weight: 600;
-      color: #444;
+      font-size: 15px;
+      font-weight: 500;
+      color: #3c4043;
     }
 
     .result {
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 6px;
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 8px;
       font-size: 16px;
       line-height: 1.5;
     }
 
     .result.pass {
-      background-color: #e7f7e7;
-      border: 1px solid #4CAF50;
-      color: #2e7d32;
+      background-color: #e6f4ea;
+      border-left: 4px solid #34a853;
+      color: #137333;
     }
 
     .result.fail {
-      background-color: #fff3f3;
-      border: 1px solid #e53935;
-      color: #c62828;
+      background-color: #fce8e6;
+      border-left: 4px solid #d93025;
+      color: #a50e0e;
     }
 
     .progress-container {
-      background-color: #dee2e6;
-      border-radius: 20px;
+      background-color: #e0e0e0;
+      border-radius: 10px;
       overflow: hidden;
-      margin-top: 15px;
-      height: 20px;
+      margin-top: 20px;
+      height: 18px;
     }
 
     .progress-bar {
       height: 100%;
       width: 0;
-      background-color: #007bff;
+      background-color: #1a73e8;
       text-align: center;
       color: white;
-      line-height: 20px;
-      transition: width 0.5s ease;
+      line-height: 18px;
+      font-size: 13px;
+      transition: width 0.4s ease;
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 500px) {
       .stats {
         flex-direction: column;
       }
@@ -138,17 +152,17 @@
 <body>
 
   <header>
-    Attendance Dashboard
+    Attendance Calculator
   </header>
 
   <div class="dashboard">
     <h2>Check Your Attendance</h2>
 
     <form id="attendanceForm">
-      <label for="held">Total Classes Held:</label>
+      <label for="held">Total Classes Held</label>
       <input type="number" id="held" placeholder="e.g., 40" required />
 
-      <label for="attended">Classes Attended:</label>
+      <label for="attended">Classes Attended</label>
       <input type="number" id="attended" placeholder="e.g., 30" required />
 
       <button type="submit">Calculate</button>
@@ -210,7 +224,7 @@
       progressContainer.style.display = 'block';
 
       if (percentage >= 75) {
-        message += " ✅<br>You are <strong>allowed</strong> to sit in the exam.";
+        message += " ✅<br>You are <strong>eligible</strong> for the exam.";
         resultDiv.className = "result pass";
       } else {
         const needed = Math.ceil((0.75 * held - attended) / 0.25);
@@ -221,7 +235,6 @@
       resultDiv.innerHTML = message;
       resultDiv.style.display = 'block';
 
-      // Update stats boxes
       heldCard.innerText = `Held: ${held}`;
       attendedCard.innerText = `Attended: ${attended}`;
       percentCard.innerText = `Percent: ${percentage.toFixed(2)}%`;
